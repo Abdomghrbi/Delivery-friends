@@ -1,4 +1,4 @@
-```jsx
+jsx
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/shared/ProtectedRoute';
@@ -101,4 +101,3 @@ function App() {
 }
 
 export default App;
-```
