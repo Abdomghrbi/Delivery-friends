@@ -87,11 +87,13 @@ as $$
   select public.current_user_role() = 'admin';
 $$;
 
-create trigger if not exists set_profiles_updated_at
+drop trigger if exists set_profiles_updated_at on public.profiles;
+create trigger set_profiles_updated_at
 before update on public.profiles
 for each row execute procedure public.set_updated_at();
 
-create trigger if not exists set_orders_updated_at
+drop trigger if exists set_orders_updated_at on public.orders;
+create trigger set_orders_updated_at
 before update on public.orders
 for each row execute procedure public.set_updated_at();
 
