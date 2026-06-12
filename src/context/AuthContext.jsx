@@ -33,27 +33,21 @@ export function AuthProvider({ children }) {
   const [error, setError] = useState(null);
 
   const hydrateProfile = useCallback(async (currentUser) => {
-  if (!currentUser) {
-    setProfile(null);
-    return null;
-  }
-
-  try {
-    const fetchedProfile = await fetchProfile(currentUser.id);
-    setProfile(fetchedProfile);
-    return fetchedProfile;
-  } catch (profileError) {
-    // إذا الخطأ معناه "المستخدم مش موجود" — سوّ sign out
-    if (profileError?.code === 'PGRST116') {
-      await handleSignOut();
+    if (!currentUser) {
+      setProfile(null);
       return null;
     }
-    // غير كذا — استخدم fallback
-    const fallbackProfile = buildFallbackProfile(currentUser);
-    setProfile(fallbackProfile);
-    return fallbackProfile;
-  }
-}, [handleSignOut]);
+
+    try {
+      const fetchedProfile = await fetchProfile(currentUser.id);
+      setProfile(fetchedProfile);
+      return fetchedProfile;
+    } catch (profileError) {
+      const fallbackProfile = buildFallbackProfile(currentUser);
+      setProfile(fallbackProfile);
+      return fallbackProfile;
+    }
+  }, []);
 
   const bootstrap = useCallback(async () => {
     if (!isSupabaseConfigured || !supabase) {
